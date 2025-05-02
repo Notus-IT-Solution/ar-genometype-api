@@ -3,15 +3,16 @@ package com.Notus_IT_Solution.AR_Genometype_API.controllers;
 import com.Notus_IT_Solution.AR_Genometype_API.dto.UploadResponse;
 import com.Notus_IT_Solution.AR_Genometype_API.services.ImageService;
 import com.google.zxing.WriterException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.Base64;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.Base64;
 
 @RestController
 public class ImageController {
@@ -21,6 +22,7 @@ public class ImageController {
     @Value("${image.upload-dir}")
     private String uploadDir;
 
+    @Autowired
     public ImageController(ImageService imageService) {
         this.imageService = imageService;
     }
