@@ -7,7 +7,8 @@ import java.util.List;
 public interface UserService {
     List<Users> findAll();
     Users findById(long id);
-    List<Users> findRandomUsers();
+    List<Users> findRandomUsers(int num);
+    Users findRandomUser();
     Users save(Users user);
 
 }
