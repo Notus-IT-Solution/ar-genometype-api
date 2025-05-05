@@ -6,6 +6,7 @@ import com.Notus_IT_Solution.AR_Genometype_API.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,8 +37,14 @@ public class UsersController {
     }
 
     @GetMapping("/users/random")
-    public List<Users> findRandomUsers() {
-        return userService.findRandomUsers();
+    public Users findRandomUser() {
+        return userService.findRandomUser();
+    }
+
+    @GetMapping("/users/random/{num}")
+    public List<Users> findRandomUsers(@PathVariable int num) {
+        List<Users> randomUserList = new ArrayList<>();
+        return userService.findRandomUsers(num);
     }
 
     @PostMapping("/users")

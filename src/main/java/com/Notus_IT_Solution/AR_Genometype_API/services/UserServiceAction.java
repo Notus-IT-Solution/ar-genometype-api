@@ -38,20 +38,27 @@ public class UserServiceAction implements UserService {
     }
 
     @Override
-    public List<Users> findRandomUsers() {
-        int getRandomUser = 5;
+    public List<Users> findRandomUsers(int num) {
         List<Users> randomUserList = new ArrayList<>();
         List<Users> allUsers = userRepository.findAll();
         int totalUserSize = allUsers.size();
         Random random = new Random();
 
-        while (randomUserList.size() < getRandomUser) {
+        while (randomUserList.size() < num) {
             Users randomUser = allUsers.get(random.nextInt(totalUserSize));
             if (!randomUserList.contains(randomUser)) {
                 randomUserList.add(randomUser);
             }
         }
         return randomUserList;
+    }
+
+    @Override
+    public Users findRandomUser() {
+        Random random = new Random();
+        List<Users> allUsers = userRepository.findAll();
+        int totalUserSize = allUsers.size();
+        return allUsers.get(random.nextInt(totalUserSize));
     }
 
     @Override
