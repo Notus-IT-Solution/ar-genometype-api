@@ -20,9 +20,7 @@ import java.util.UUID;
 @Service
 public class ImageService {
 
-    @Value("${image.upload-dir}")
     private String uploadDir;
-
     private final ImageFileRepository imageFileRepository;
     
     @Autowired
@@ -44,7 +42,7 @@ public class ImageService {
         Path filePath = uploadPath.resolve(storedFilename);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        String downloadUrl = "http://localhost:8080/download/" + storedFilename;
+        String downloadUrl = "http://203.154.105.81:10000/download/" + storedFilename;
 
         ImageFile imageFile = new ImageFile(
                 originalFilename,

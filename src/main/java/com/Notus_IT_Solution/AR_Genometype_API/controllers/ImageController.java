@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.Base64;
+import java.util.Map;
 
 @RestController
 public class ImageController {
@@ -28,13 +29,19 @@ public class ImageController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<UploadResponse> uploadImage(@RequestParam("file") MultipartFile file) throws IOException, WriterException {
-        String savedFilename = imageService.saveImage(file);
-        String imageUrl = "http://localhost:8080/download/" + savedFilename;
-        byte[] qrCode = imageService.generateQRCode(imageUrl);
-        String base64Qr = Base64.getEncoder().encodeToString(qrCode);
+    public ResponseEntity<?> uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            String savedFilename = imageService.saveImage(file);
+            String imageUrl = "http://203.154.105.81:10000/download/" + savedFilename;
+            byte[] qrCode = imageService.generateQRCode(imageUrl);
+            String base64Qr = Base64.getEncoder().encodeToString(qrCode);
 
-        return ResponseEntity.ok(new UploadResponse(imageUrl, base64Qr));
+            return ResponseEntity.ok(new UploadResponse(imageUrl, base64Qr));
+        } catch (Exception e) {
+            e.printStackTrace(); // print the actual cause in the logs
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping("/download/{filename:.+}")
